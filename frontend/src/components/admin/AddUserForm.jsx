@@ -24,9 +24,11 @@ const AddUserForm = () => {
         logo: "",
         userId: "",
     });
+    const [loading, setLoading] = useState(false); // Loading state
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
+    // Handle user input changes
     const handleUserChange = (e) => {
         const { name, type, files, value } = e.target;
         setUserFormData({
@@ -35,6 +37,7 @@ const AddUserForm = () => {
         });
     };
 
+    // Handle company input changes
     const handleCompanyChange = (e) => {
         const { name, value } = e.target;
         setCompanyFormData({
@@ -43,8 +46,10 @@ const AddUserForm = () => {
         });
     };
 
+    // Submit user form
     const handleUserSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true); // Set loading to true
         try {
             const formData = new FormData();
             Object.keys(userFormData).forEach((key) => {
@@ -70,11 +75,15 @@ const AddUserForm = () => {
             console.error("Error submitting user form:", error);
             setError("Failed to add user. Please try again.");
             setSuccess(null);
+        } finally {
+            setLoading(false); // Reset loading state
         }
     };
 
+    // Submit company form
     const handleCompanySubmit = async (e) => {
         e.preventDefault();
+        setLoading(true); // Set loading to true
         try {
             const response = await addCompany(companyFormData);
             console.log("Company added successfully:", response);
@@ -93,9 +102,12 @@ const AddUserForm = () => {
             console.error("Error submitting company form:", error);
             setError("Failed to add company. Please try again.");
             setSuccess(null);
+        } finally {
+            setLoading(false); // Reset loading state
         }
     };
 
+    // Handle profile picture file upload
     const changeFileHandler = (e) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -103,10 +115,12 @@ const AddUserForm = () => {
         }
     };
 
+    // Preview profile picture
     const previewImage = userFormData.file ? URL.createObjectURL(userFormData.file) : null;
 
     return (
         <div className="max-w-4xl mx-auto my-10">
+            {/* Tabs for switching between User and Company forms */}
             <div className="flex justify-around mb-6">
                 <Button onClick={() => setActiveTab("user")} className={activeTab === "user" ? "bg-[#F83002]" : "bg-gray-200"}>
                     Add User
@@ -116,9 +130,19 @@ const AddUserForm = () => {
                 </Button>
             </div>
 
+            {/* Form container */}
             <div className="h-[500px] overflow-y-auto border p-4 rounded shadow">
+                {/* User Form */}
                 {activeTab === "user" && (
                     <form onSubmit={handleUserSubmit} className="space-y-4">
+                         <div>
+                            <Label htmlFor="role">Role</Label>
+                            <select name="role" id="role" value={userFormData.role} onChange={handleUserChange}>
+                                <option value="student">Student</option>
+                                <option value="recruiter">Recruiter</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
                         <div>
                             <Label htmlFor="fullname">Full Name</Label>
                             <Input
@@ -163,15 +187,7 @@ const AddUserForm = () => {
                                 required
                             />
                         </div>
-                        <div>
-                            <Label htmlFor="role">Role</Label>
-                            <select name="role" id="role" value={userFormData.role} onChange={handleUserChange}>
-                                <option value="student">Student</option>
-                                <option value="recruiter">Recruiter</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                        </div>
-
+                       
                         {userFormData.role === "student" && (
                             <>
                                 <div>
@@ -212,13 +228,14 @@ const AddUserForm = () => {
                             </div>
                         )}
                         <div className="flex justify-end">
-                            <Button type="submit" className="bg-green-500">
-                                Add User
+                            <Button type="submit" className="bg-green-500" disabled={loading}>
+                                {loading ? "Loading..." : "Add User"}
                             </Button>
                         </div>
                     </form>
                 )}
 
+                {/* Company Form */}
                 {activeTab === "company" && (
                     <form onSubmit={handleCompanySubmit} className="space-y-4">
                         <div>
@@ -284,14 +301,15 @@ const AddUserForm = () => {
                             />
                         </div>
                         <div className="flex justify-end">
-                            <Button type="submit" className="bg-green-500">
-                                Add Company
+                            <Button type="submit" className="bg-green-500" disabled={loading}>
+                                {loading ? "Loading..." : "Add Company"}
                             </Button>
                         </div>
                     </form>
                 )}
             </div>
 
+            {/* Error and success messages */}
             {error && <div className="text-red-500 mt-4">{error}</div>}
             {success && <div className="text-green-500 mt-4">{success}</div>}
         </div>

@@ -170,8 +170,8 @@ const AdminHomePage = () => {
                                         <TableCell className="text-right">
                                             {company.status === "pending" ? (
                                                 <div className="space-x-2">
-                                                    <Button onClick={() => handleAcceptOrRejectCompany(company._id, "accepted")} className="bg-green-500">Accept</Button>
-                                                    <Button onClick={() => handleAcceptOrRejectCompany(company._id, "rejected")} className="bg-red-500">Reject</Button>
+                                                    <Button onClick={() => handleAcceptOrRejectCompany(company._id, "accept")} className="bg-green-500">Accept</Button>
+                                                    <Button onClick={() => handleAcceptOrRejectCompany(company._id, "reject")} className="bg-red-500">Reject</Button>
                                                 </div>
                                             ) : (
                                                 <span className="text-gray-500">Already Updated</span>
@@ -190,7 +190,7 @@ const AdminHomePage = () => {
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Profile Photo</TableHead>
+                                {/* <TableHead>Profile Photo</TableHead> */}
                                 <TableHead>User Name</TableHead>
                                 <TableHead>Role</TableHead>
                                 <TableHead>Email</TableHead>
@@ -209,7 +209,7 @@ const AdminHomePage = () => {
                                 users.filter((user) => user.role !== "admin").map((user) => (
                                     <TableRow key={user._id}>
 
-                                        <TableCell>{user.profile.profilePhoto ? user.profile.profilePhoto : "NA"}</TableCell>
+                                        {/* <TableCell>{user.profile.profilePhoto ? user.profile.profilePhoto : "NA"}</TableCell> */}
                                         <TableCell>{user.fullname ? user.fullname : "NA"}</TableCell>
                                         <TableCell>{user.role ? user.role : "NA"}</TableCell>
                                         <TableCell>{user.email ? user.email : "NA"}</TableCell>

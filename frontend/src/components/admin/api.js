@@ -138,7 +138,11 @@ export const acceptOrRejectCompany = async (companyId, action) => {
         const response = await api.put(`companies/${companyId}/${action}`);
         return response.data;
     } catch (error) {
-        console.error("Error accepting/rejecting company:", error);
+        console.error("Error accepting/rejecting company:", {
+            message: error.message,
+            responseData: error.response?.data,
+            responseStatus: error.response?.status,
+        });
         throw error;
     }
 };
