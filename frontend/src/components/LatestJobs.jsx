@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 
 // const randomJobs = [1, 2, 3, 4, 5, 6, 7, 8]
 const LatestJobs = () => {
+    // const {user} = useSelector(store => store.auth)
 
     const {allJobs} = useSelector(store => store.job)
+
 
     return (
         <div className="max-w-7xl mx-auto my-20">

@@ -22,6 +22,13 @@ const Job = ({ job }) => {
         return Math.floor(timeDifference / (1000 * 24 * 60 * 60));
     };
 
+    const handleDetailsClick = () =>{
+        if(user)
+        navigate(`/description/${job._id}`)
+        else
+        toast.error("Log In to View Details")
+    }
+
     const toggleBookmark = () => {
         if (user) {
             if (isSaved) {
@@ -86,7 +93,7 @@ const Job = ({ job }) => {
                 </div>
 
                 <div className='flex items-center gap-4 mt-5'>
-                    <Button onClick={() => navigate(`/description/${job?._id}`)} variant="outline">Details</Button>
+                    <Button onClick={handleDetailsClick} variant="outline">Details</Button>
                     <Button 
                         className={!user ? "bg-[#F83002] text-white" : "bg-[#F83002] text-white"} 
                         onClick={toggleBookmark}
