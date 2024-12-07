@@ -191,6 +191,7 @@ const AdminHomePage = () => {
                         <TableHeader>
                             <TableRow>
                                 {/* <TableHead>Profile Photo</TableHead> */}
+                                <TableHead>User Id</TableHead>
                                 <TableHead>User Name</TableHead>
                                 <TableHead>Role</TableHead>
                                 <TableHead>Email</TableHead>
@@ -210,6 +211,7 @@ const AdminHomePage = () => {
                                     <TableRow key={user._id}>
 
                                         {/* <TableCell>{user.profile.profilePhoto ? user.profile.profilePhoto : "NA"}</TableCell> */}
+                                        <TableCell>{user._id || "NA"} </TableCell>
                                         <TableCell>{user.fullname ? user.fullname : "NA"}</TableCell>
                                         <TableCell>{user.role ? user.role : "NA"}</TableCell>
                                         <TableCell>{user.email ? user.email : "NA"}</TableCell>
